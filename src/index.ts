@@ -57,6 +57,10 @@ export default {
         const userId = await getOrCreateUser(env, value.email);
         ctx.subject("user", { id: userId });
 
+        // Store the username in session storage
+        const username = value.email.split('@')[0]; // Assuming the username is the part before '@'
+        ctx.storage.set('username', username);
+
         // Redirect to the desired URL after successful authentication
         const redirectUrl = new URL("https://steviewondermack.us");
         return Response.redirect(redirectUrl.toString(), 302);
